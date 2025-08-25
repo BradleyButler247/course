@@ -1,0 +1,90 @@
+Windows Terminal
+
+Folder structure & commands
+    Root directory is where all files and folders begin
+
+    User  folder is all files and folders for specific User
+
+    cd - will move you down a directory
+
+    cd .. - will move you up a directory
+
+    ls - lists files in the current directory
+
+    Flags can enhance commands
+        ls -a - views all files including hidden files and folders
+
+        ls -l - shows information for all non hidden folders
+
+        ls -la - will show all information in all folders including hidden ones
+
+    pwd - shows current file path
+
+    man - followed by a command will give you a manual on the given command
+
+    mkdir - makes a folder (mkdir folder_name)
+
+    touch - makes a file (touch file_name)
+
+    mv - move files and folders (mv file_name ../) the ../ will move it to the parent folder (mv file_name desired_folder/) will move it to the desired folder (mv file_name ../new_file_name) will rename the file and move it to the parent folder
+
+    cp - will create a copy of the file/folder; cp -r creates a copy of a folder and all nested files
+
+    rm - deletes files completely; rm -rf will delete a folder and all nested content
+
+    rmdir deletes empty folders completely
+
+    cat (cat file_name) displays the content of a file
+
+    echo repeats back text, using echo "text" > file_name will put the text into the file, does not append content it writes over file content
+
+Useful keyboard shortcuts
+    ctrl + a moves cursor to the front of the line
+
+    ctrl + e moves cursor to the end of the line
+
+    ctrl + w deletes the word the cursor is on
+
+    ctrl + u deletes an line up to the cursor
+
+
+
+
+
+Part 1
+    mkdir first
+
+    cd first
+
+    touch person.txt
+
+    mv person.txt another.txt
+
+    cp another.txt copy.txt
+
+    rm copy.txt
+
+    cp -r first second
+
+    rm -rf second
+
+Part 2
+    man gives a manual to the provided command; up & down key; q
+
+    ls -l provide a list of all files in the directory that aren't hidden and some additional information; ls -a displays all files in the directory including hidden files
+
+    ctrl + left/right arrow keys
+
+    ctrl + e
+
+    ctrl + a
+
+    ctrl + w
+
+    a terminal is a text input/output environment, a shell is a command line interpreter
+
+    an absolute path is the complete file path starting from the root directory while a relative path is the file path from the current directory
+
+    flags are how we enhance commands, -l -a -rf
+
+    the r removes the folders and and goes through each file/folder the f forces its removal

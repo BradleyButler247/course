@@ -1,0 +1,18 @@
+rest (...)
+    rest operator is the same as the spread operator, it depends on the context they're in
+
+    when ... appears in a function it is a rest operator
+
+    it is the last parameter defined in a function and will evaluate to an array of all additional arguments passed in
+
+    function sum(...nums) {
+        nums.reduce((sum,n) => sum + n);
+    }
+
+    this will convert the nums provided when the function is call into an array then reduce it into the sum
+
+    const sumAll = (...vals) => {
+        return values.reduce((sum,n) => sum + n);
+    };
+
+    

@@ -1,0 +1,91 @@
+Better syntax for writing function expressions
+    For example:
+        const add = function(x, y) {
+            return x + y;
+        };
+
+        Can be written as:
+
+        const add = (x, y) => {
+            return x + y;
+        };
+
+        [2,3,6,78,99,104,23].reduce(function(max, curNum) {
+            return Math.max(max, curNum);
+        })
+
+        [2,3,6,78,99,104,23].reduce(max, curNum) => {
+            return Math.max(max, curNum);
+        }
+
+        Can be saved as a variable but the function itself cannot be named
+
+        If function has just one perameter we can do the following
+
+        [1,2,3,4,5].forEach((n) => {
+            console.log(n * 10);
+        });
+
+        can be rewritten as:
+
+        [1,2,3,4,5].forEach(n => {
+            console.log(n * 10);
+        });
+
+        Arrow function with no parameters:
+
+        const greet = () => {
+            console.log('HELLO')
+        };
+
+        Arrow functions have an implicite return if you leave off curly braces
+
+        let nums = [1,2,3];
+        let arrSquared = nums.map(n => n ** 2);
+
+        [1,2,3,4,5,6].filter((num) => num % 2 === 0);
+
+        This will return all even numbers
+
+        const doubles = (n) => num * 2
+
+        This will return doubled num
+
+        Only works for single expressions
+
+        [1,2,3,4,5,6,7,8].map((n) => {
+            if (n % 2 === 0) {
+                return 'even'
+            }
+            return 'odd'
+        })
+
+        since we have an if statement and it is on multiple lines we cannot use implicite return but we can use implicit return if we write the statement using a ternary operator
+
+        [1,2,3,4,5,6,7,8].map((n) => n % 2 === 0 ? 'even' : 'odd');
+
+        const dailyRainTotals = [[1.2,0.35,2.2], 
+                                [1.7,0.6,0.1], 
+                                [2.5,0.9,1.5]];
+
+        If we want to return an array with the sum of each sub array
+
+        dailyRainTotals.map((hourlyRainTotals) => {
+            return hourlyRainTotals.reduce((sum, inchesOfRain) => {
+                return sum + inchesOfRain;
+            })
+        })
+
+        Rewritten as:
+
+        dailyRainTotals.map((hourlyRainTotals) => 
+        hourlyRainTotals.reduce((sum, inchesOfRain) => {sum + inchesOfRain}
+        );
+
+        If you want to use an implicit return it needs to take up one line or be wrapped in parentheses 
+
+        Don't use arrow functions with "this" command
+
+        babel will take modern js and turn it into browser complatable code
+
+        

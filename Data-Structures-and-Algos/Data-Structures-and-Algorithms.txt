@@ -1,0 +1,550 @@
+Big-O Notation
+
+    Used for comparing code that performs the same function
+
+        Speed, memory-intensity, readability
+
+    Speed
+
+        To measure speed a timer is not usually very accurate
+
+        It makes more sense to count the number of simple operations that a function requires
+
+    Counting Operations
+
+        function addToSecond(n) {
+            n * (n + 1) / 2
+        }
+        
+            This requires 3 operations no matter how big n is
+        
+        function addToSecond(n) {
+            let total
+            for (let i = 2; i <= n; i++) {
+                total +=1; 
+            }
+            return total
+        }
+       
+        Looking at this function it is hard to determine how many operations are needed
+       
+            Is i <= n one? is i++ one?
+        
+            The bottom line is it will need to perform at least one operation for each iteration
+       
+                This means it will be slower to run as the number increases
+
+    Big-O
+
+        Time Complexity
+
+            An algorithm is O(f(n)) if the numbber of simple operations is eventually less than a constant times f(n) as n increases
+
+                Common Big-O equations
+
+                    Linear
+
+                        f(n) = n
+
+                    Quadratic
+
+                        f(n) = n^2
+
+                    Constant
+
+                        f(n) = 1
+
+                    Logarithmic
+
+                        f(n) = log n
+
+                        OR
+
+                        f(n) = n log n
+
+                    Exponential
+
+                        2 ^ n
+
+                    Factorial
+
+                        n!
+
+
+            For example:
+
+                function addToSecond(n) {
+                    n * (n + 1) / 2
+                }
+
+                    This function is constant or O(1)
+
+
+                function addToSecond(n) {
+                    let total
+                    for (let i = 2; i <= n; i++) {
+                        total +=1; 
+                    }
+                    return total
+                }
+
+                    This grows proportionately to n so it is linear of O(n)
+
+                function printAllPairs(n) {
+                    for (let i = 0; i < n; i++) {
+                        for (let j = 0; j < n; j++) {
+                            console.log(i,j)
+                        }
+                    }
+                }
+
+                    This grows exponentially or O(n^2)
+
+            Always assume the "worst case"
+
+                If there is a conditional that breaks a loop, assume the loop is never broken
+
+            Simplifying Big-O
+
+                Constants don't matter
+
+                    If a function is always 1, 10, 100, etc operations it is O(1)
+
+                    Variable assignment is constant
+
+                    Accessing elements in an array by index is constant
+
+                    Accessing elements in object by key is constant
+
+                    Loops: Length of the loop times complexity of whatever happens in the loop
+
+        Space Complexity
+
+            Less common than time complexity
+
+                Most primitives (boolean, numbers, undefined, null): constant space
+
+                Strings: O(n) space (n is the string length)
+
+                Reference types: Generally O(n) (n is array length or keys in object)
+
+
+
+Problem Solving
+
+    Divide & Conquer
+
+        Linear search 
+
+            array.indexOf(val)
+
+                Time complexity of O(n)
+
+        Binary search
+
+            ARRAY MUST BE SORTED
+
+            Picks middle value of array
+
+                If it is greater than desired val it cuts off right half
+
+                If it is lesser than desired val it cuts off left half
+
+                Then checks middle number again
+
+                Repeat...
+
+            Has a time complexity of O(log(n))
+
+            
+Arrays & Linked Lists
+
+    Abstract Data Types
+
+        Lists
+
+            Describes set of requirements, not exact implementation
+
+                Keep multiple items
+
+                Insert/delete items at any position
+
+                Contain duplicates
+
+                Preserve item order
+
+            Examples
+
+                Arrays
+
+                    Runtimes
+
+                        Retrieving by index
+
+                            O(1)
+
+                        Finding
+
+                            O(n)
+
+                        General Insertion
+
+                            O(n)
+
+                        General Deletion
+
+                            O(n)
+
+
+                Direct Arrays/Vectors
+
+                    Only work if items are the same size
+
+                        All numbers
+
+                        All same-length strings
+
+
+                Indirect Arrays
+            
+                    Typical JS array 
+
+                    Doesn't actually hold the value
+
+                    Holds memory address of the real value
+
+                    This allows for storing data of different types and length
+
+
+                Linked List
+
+                    Items aren't stored in contiguous memory, instead, each item references the next item in the sequence
+
+                    Allows for rearranging of items without having to move other items in memory
+
+                    Inefficient for accessing data by index or value
+
+
+Stacks & Queues
+
+    Queues
+
+        First in is the first out
+
+        Typical Methods
+
+            enqueue(item)
+
+                Add to end
+
+            dequeue()
+
+                Remove and return first item
+
+            peek()
+
+                Return first item but don't remove it
+
+            isEmpty()
+
+                Are and items in the queue?
+
+        Linked lists are better than arrays for queues
+
+
+    Stacks
+
+        Last in is the first out
+
+        Items are added to the stack by pushing them on top
+
+        Items are removed from the stack by popping them off the top
+
+        Typical Methods
+
+            push(item)
+
+                Add to "top" of stack
+
+            pop()
+
+                Remove and return top item
+
+            peek()
+
+                Return first item but don't remove it
+
+            isEmpty()
+
+                Are and items in the stack?
+
+        Arrays are alright for a stack
+
+        Linked lists are alright as long as you add and remove the head not the tail unless it is a double linked list
+
+    
+    Deques
+
+        Double-ended queue
+
+        Typical methods are push, pop, shift, unshift
+
+        Double Linked lists are best for deques
+
+    
+    Priority Queues
+
+        Items are added to queue with a priority ranking and removed based on priority level
+
+        Typical methods
+
+            add(pri, item)
+
+            poll()
+
+                Remove and return top-priority item
+
+            peek
+
+                Return and do not remove top-priority item
+
+            isEmpty()
+
+                Are and items in the queue?
+
+        Heaps are best used for these
+
+
+Recursion
+
+    Useful for:
+    
+        File systems
+
+        Fractals
+
+        Parsing
+
+
+Hash Tables/Hash Maps
+
+    Maps
+
+        Map keys to values
+
+        Typical Methods
+
+            set(key, val)
+
+            get(key)
+
+            delete(key)
+
+            has(key)
+
+            keys()
+
+            values()
+
+            entries()
+
+        Data cal be stored in an array as a subarray containing the key and the value
+
+    Tables
+
+        We can hash a string to a number using charCode
+
+            Sum char codes and store at index of calculated value
+
+        To avoid a long array with only a few values we can mod (%) the charCode sum by the array length
+
+        This still presents a problem for palindromes like act and cat
+
+            To solve this we can use Horner's method:
+
+                accum * primeNum + charCode
+
+                Now the order of letters will lead to a different sum
+
+        
+Binary Search Trees
+
+    Can only have 0 - 2 trees
+
+    Binary search trees not only improve search speed but also improve value insertion time
+
+    Creating a node that we are able to search through
+
+            class Node {
+                constructor(val, left = null, right = null) {
+                    this.val = val;
+                    this.left = left;
+                    this.right = right;
+                }
+
+                -------------------------------------------------------------------------------------------------
+
+                find(sought) {
+                    let currentNode = this;
+                    while (currentNode) {
+                        console.log("VISITING:", currentNode.val);
+                        if (currentNode.val === sought) return currentNode;
+                        if (currentNode.val > sought) {
+                            currentNode = currentNode.left;
+                        } else {
+                            currentNode = currentNode.right;
+                        }
+                    }
+                }
+
+                -------------------------------------------------------------------------------------------------
+
+                find(sought) {
+                    let current = this;
+
+                    while (current) {
+                        if (current.val === sought) 
+                        return current;
+
+                    current = sought < current.val
+                        ? current.left
+                        : current.right;
+                    }
+                }
+            }
+
+    
+    Creating a binary tree that is easily traversed
+
+            class BinarySearchTree {
+                constructor(root = null) {
+                    this.root = root;
+                }
+                traverse(node = this.root) {
+                    if (node.left) this.traverse(node.left);
+
+                    if (node.right) this.traverse(node.right);
+                    console.log(node.val);
+                }
+            }
+
+
+    Balancing a BST
+
+        Shuffling values before creating a tree works
+
+        Sorting data then pulling from the middle of the data is more optimized
+
+        AVL Trees will self balance but are less efficient
+
+        Red/Black Trees are reasonably balanced but more efficient than AVL Trees  
+
+
+    Hashmaps vs BST
+
+
+Graphs
+
+    Vertex
+
+        Node of a graph
+
+    Edge (or Arc)
+
+        Connects two nodes
+
+    Adjacent
+
+        Two nodes are adjacent if they share an edge
+
+    Weight (optional)
+
+        Edges can have a weight (ex: price or distance)
+
+    Graphs can be directed or undirected
+
+    Trees are directed acyclic graphs
+
+    Representing a Graph
+
+        Adjacency Lists
+
+            Object with each vertex as a key, corresponding value is an array or set of all adjacent vertices
+
+        Adjacency Matrix
+
+            Better for very connected data
+
+    Classes
+
+        Node 
+
+            class PersonNode {
+                constructor(name, adjacent = new Set()) {
+                    this.name = name;
+                    this.adjacent = adjacent;
+                }
+            }
+
+        Graph
+
+            class FriendGraph {
+                constructor() {
+                    this.nodes = new Set();
+                }
+
+                // Add one person
+                addPerson(person) {
+                    this.nodes.add(person);
+                }
+
+                // Add multiple people
+                addPeople(people_list) {
+                    for (let person of people_list) {
+                        this.addPerson(person);
+                    }
+                }
+
+                // Connect two adjacent vertices
+                setFriends(person1, person2) {
+                    person1.adjacent.add(person2);
+                    person2.adjacent.add(person1);
+                }
+
+            }
+
+            *** Refer to /dsa-graphs-demo/friends.js for methods to check connections ***
+            
+
+Sorting
+
+    Bubble Sorting
+
+        Sorts one item at a time
+
+    Merge Sort
+
+    
+Wrap Up
+
+    Heaps
+
+        A method of prioritizing values in a tree, typically a binary tree
+
+        Each parent heap is greater than the children heaps
+
+        Represent as an array
+
+            The children of the value at index of i can be found using the following:
+
+                Left:  2i + 1
+
+                Right: 2i + 2
+
+            To find parent of value at i use the inverse:
+
+                left:  (i/2) - 1
+
+                Right: (i/2) - 2
+
+     

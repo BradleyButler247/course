@@ -1,0 +1,480 @@
+Databases allow us to do complex searches easily
+
+Databases are a collection of data organized to be stored accessed and managed efficiently
+
+Database typically refers to the server software, the data records themselves and the physical machine holding the data
+
+Client (Frontend)
+    HTML/JS/CSS
+    jQuery
+    React 
+    Angular
+    Vue
+    & more
+
+Server (Backend)
+    Flask
+    Django
+    Ruby on Rails
+    Node.JS/Express.JS
+    Java Spring
+    & more
+
+
+Database (Backend)
+    PostgreSQL
+    MySQL
+    SQLite
+    MongoDB
+    Cassandra
+    & more
+
+Relational Database
+
+    Model data as rows and columns of tabular data (Like a spreadsheet)
+
+    RDBMS - Relational Database Management System
+
+        PostgreSQL, MySQL, Oracle, etc.
+
+    Schema - Logical representation of a database including its tables
+
+    SQL - Structured Query Language, a human-readable language for querying
+
+    Table (a.k.a relation) - Basically a spreadsheet, set of rows and columns
+
+    Columns - Table attribute
+
+    Rows - Table record with values for set columns
+
+PSQL Commands
+
+    psql - Opens postgres shell so we can issue database commands
+
+    psql db_name - Opens postgres shell for specified db
+
+    > psql db_name 
+    > SELECT * FROM db_name - Displays info on the database and the table of the database
+
+    createdb database_name - Creates a new DB, run from bash shell
+    
+    psql < seed_file.sql - Seeds a db (fills it with data from .sql file)
+
+    \l - List all Databases
+
+    \c db_name - Connect to db_name
+
+    \dt - List all tables in current db
+
+    \d table_name - Gets details about table_name in current db
+
+    \q or ctrl-D - Quit psql
+
+    dropdb db_name - Completely deletes an entire database
+
+    pg_dump -C -c -O db_name > backup_file.sql - Saves data from db_name in backup_file.sql
+
+    \x auto - Expanded view of a Table
+
+SQL 
+
+    Human-readable language for relational databases
+
+    Strings in SQL:
+
+        Case-sensitive
+
+        Single-quotes, NOT DOUBLE, around Strings
+
+    Commands end with a semicolon
+
+    Keywords are conventionally written in all caps but it is not required
+
+    CRUD:
+
+        C          Create       INSERT INTO
+        R          Read         SELECT...FROM
+        U          Update       UPDATE...SET
+        D          Delete       DELETE FROM
+
+    SELECT statement subclauses:
+
+        FROM        Select and join together tables where data is       Not required
+        WHERE       Decide which rows to use                            Not required
+        GROUP BY    Place rows into groups                              Not required
+        SELECT      Determine values of results                         Required
+        HAVING      Determine which grouped results to keep             Not required
+        ORDER BY    Sort output data                                    Not required
+        LIMIT       Limit output to n rows                              Not required
+        OFFSET      Skip n rows at start of output                      Not required
+
+    Examples:
+
+        SELECT author, AVG(page_count) FROM books GROUP BY author HAVING AVG(page_count) > 500;
+
+            This will select all authors with an average page count > 500
+
+        SELECT author, title FROM books ORDER BY author, title
+
+            This will select the author and title of each book then sort them but author then by title if they have the same author
+
+        SELECT author, AVG(page_count) FROM books GROUP BY author HAVING AVG(page_count) > 500 LIMIT 5;
+
+            This will select the author and title, organize them by author then title, then show the first 5
+
+        SELECT id, author FROM books LIMIT 5;
+
+            This selects the author and ID of books with ID 1 - 5
+
+        SELECT id, author FROM books LIMIT 5 OFFSET 5;
+
+            This selects the author and ID of books  with ID 6 - 10
+
+    Operators
+
+        SELECT id, title FROM books WHERE id IN (1, 7, 9);
+
+            This selects the ID and title of books with an ID number in the provided list of numbers
+
+            Could also use NOT IN to get every title of a book with an ID that is not in the provided list
+
+        SELECT id, title FROM books WHERE id BETWEEN 20 AND 25;
+
+            This will return the ID and title of books with ID 20 - 25
+
+        LIKE
+
+            'abc' LIKE 'abc - True
+
+            'abc' LIKE 'a%' - True, % is equal to any sequence of zero or more characters
+
+            'abc' LIKE '_b_' - True, _ is equal to one character
+
+            'abc' LIKE 'c' - False
+
+            SELECT id, title FROM books WHERE title LIKE 'T';
+
+                This will return all books with title 'T';
+
+            SELECT id, title FROM books WHERE title LIKE 'T%';
+
+                This will return all books with a title starting with T
+                
+            SELECT id, title FROM books WHERE title LIKE '%:%';
+
+                This will return the ID and title of all books containing ':'
+
+            ********** LIKE is case sensitive but ILIKE is not **********
+            
+        AS
+
+            AS is an alias
+
+            SELECT AVG(page_count) AS avg_pages, AVG(price) AS avg_price FROM books GROUP BY author;
+
+                This will return a table of the avg page count and avg price grouped by author
+
+                    Typically the title of each column title would be 'avg' but with AS they'll be the alias provided
+
+            SELECT author, SUM(page_count) FROM books GROUP BY author ORDER BY SUM(page_count);
+            
+                This will provide a table of authors and their total page count ordered by smallest count to largest
+            
+            SELECT author, SUM(page_count) AS total FROM books GROUP BY author ORDER BY total;
+
+                This is the same command but using the alias of total instead of SUM(page_count)
+
+    Modifying Data
+
+        INSERT INTO books (title, author, price) VALUES ('Dog Book', 'Brad Butler', 19.99);
+
+            This will insert the book 'Dog Book' by 'Brad Butler' price  19.99 into the database books
+
+            ID will be set to highest ID by default, in this case 41, if we do not provide one
+
+        INSERT INTO books (title, author) VALUES ('Dog Book', 'Brad Butler'), ('Chicken Book', 'Colt Steele'), ('Animals are Cool', 'Charles Darwin');
+
+            These will be added as separate entries into the table
+
+        Updating Data
+
+            UPDATE books SET price = 0; 
+
+                This will set the price of all books to 0
+
+            UPDATE books SET author = 'Brad Butler' WHERE author = 'J. K. Rowling';
+
+                Now I wrote all of the Harry Potter books
+
+        Deleting Data
+
+            DELETE FROM books WHERE title = 'Emma';
+
+                This will delete all books titled 'Emma'
+ 
+    Joins
+
+        Primary key is typically the ID, but it is unique to each row of a table
+
+        Foreign key is a primary key that comes from a different table
+
+        One-to-Many
+
+            One studio has many movies
+
+            One user can have many posts but a post has one user
+
+            In movies_example:
+
+               Setting up a foreign key constraint with DDL:
+
+                   CREATE TABLE movies
+                       (id SERIAL PRIMARY KEY,
+                        name TEXT,
+                        founded_in TEXT);
+
+                   CREATE TABLE movies
+                       (id SERIAL PRIMARY KEY,
+                        title TEXT,
+                        studio_id INTEGER REFERENCES studios (id));
+
+               Deleting Data
+
+                   Option 1
+
+                       Clear out studio_id columns of movies that reference it
+
+                           UPDATE movies SET studio_id = NULL WHERE studio_id=1;
+                           DELETE FROM studios WHERE id = 1;
+
+                   Option 2
+
+                       Delete the movies associated with that studio then delete the studio 
+
+                           DELETE FROM movies WHERE studio_id = 1;
+                           DELETE FROM studios WHERE id = 1;
+
+        Joining tables
+
+            SELECT title, name FROM movies JOIN studios ON movies.studio_id = studios.id;
+
+                This will create a new table combining the two tables at studio_id
+
+            JOIN is an inner join by default
+
+            Inner Join
+
+                Only common values from each table, like center of Venn Diagram
+
+            Outer Join
+
+                Left
+
+                    Only values from left table and common values, like the left circle and center of Venn Diagram
+
+                Right
+
+                    Only values from right table and common values, like the right circle and center of Venn Diagram
+
+                Full
+
+                    All values on both tables
+
+        Many-to-Many
+
+            Like actors, each movie has many actors and most actors have many movies
+
+            Creates a third table, which is essentially a one-to-many back to back with another one-to-many
+
+            When setting up join table use ON DELETE CASCADE to allow you to delete from the table, which will then delete the data in the related tables as well
+
+            SELECT * FROM roles JOIN actors ON roles.actor_id = actors.id;
+
+                This will display the roles table but instead of displaying actor_id it will display the data from the actors table (name, birthday)
+
+            SELECT first_name, last_name, count(*) FROM roles JOIN actors ON roles.actor_id = actors.id GROUP BY actors.id;
+
+                This will show us the actors name and the number of roles they've appeared in
+
+            SELECT m.title, a.first_name, a.last_name
+              FROM movies m
+              JOIN roles r 
+                ON m.id = r.movie_id
+              JOIN actors a
+                ON r.actors_id = a.id;
+
+                    This allows us to abbreviate movies to m, roles to r and actors to a
+
+            SELECT m.title, a.first_name, a.last_name
+              FROM movies m
+              JOIN roles r
+                ON m.id = r.movie_id
+              JOIN actors a
+                ON a.id = r.actor_id
+             WHERE m.release_year < 2000;
+
+                    This will give us the movie title and actor for all movies released before 2000
+            
+DDL & Schema Design
+
+    DDL Basics
+
+        Create Table
+
+            CREATE TABLE books (
+                id SERIAL PRIMARY KEY,
+                title TEXT,
+                author TEXT,
+                price FLOAT,
+                page_count INTEGER,
+                publisher TEXT,
+                publication_date DATE
+            );
+
+        Drop Table
+
+            DROP TABLE books;
+
+        Datatypes in Postgres
+
+            Integers
+
+            Floats
+
+                You can specify precision
+
+            Text
+
+            Varchar
+
+                Variable-length character string
+
+                Allows you to set character limit
+
+            Boolean
+
+            Date
+
+                Date without time
+
+            Timestamp
+
+                Date and time
+
+            Serial
+
+                Auto-incrementing numbers
+
+            NULL
+
+                NULL is a special value in SQL for 'unknown' or lack of a value
+
+                This is NOT the same thing as 0 or an empty string
+
+        Constraints
+
+            Primary Key
+
+                Every table must have a unique identifier
+
+            Unique
+
+                Prevent duplicates in the column
+
+                Refer to users table in reddit_example.pgsql
+
+            Not Null
+
+                Prevents null in column
+
+            Check 
+
+                Do a logical condition before inserting/updating
+
+            Foreign Key
+
+                Column values must reference values in another table
+
+        Primary & Foreign Keys
+
+            CREATE TABLE users (
+                id SERIAL PRIMARY KEY,
+                phone_number TEXT UNIQUE,
+                password VARCHAR(20) NOT NULL,
+                account_balance FLOAT CHECK (account_balance > 0)
+            );
+
+            In the following two examples the Foreign Key in the subreddits table is user_id
+
+                It will reference the users table to verify user id is valid
+
+                We could explicitly state what property we want to it to verify but it will default to id
+
+                CREATE TABLE users (
+                    id SERIAL PRIMARY KEY,
+                    username VARCHAR(15) UNIQUE NOT NULL,
+                    password VARCHAR(20) NOT NULL
+                );
+                
+                CREATE TABLE subreddits (
+                    id SERIAL PRIMARY KEY,
+                    user_id INTEGER NOT NULL REFERENCES users,
+                    name VARCHAR(15) NOT NULL,
+                    -- This sets a 15 character limit
+                    description TEXT,
+                    subscribers INTEGER CHECK (subscribers >= 1) DEFAULT 1,
+                    is_private BOOLEAN DEFAULT false
+                )
+
+        Deletion Behavior
+
+            We can use:
+            
+                ON DELETE SET NULL which will set the value to null if the data is deleted
+
+                Or
+
+                ON DELETE CASCADE which will delete all data referencing the deleted data as well
+
+        Alter Table
+
+            ALTER TABLE db_name ADD COLUMN column_title DATATYPE
+
+                Can add default value
+
+                    ALTER TABLE db_name ADD COLUMN column_title DATATYPE DEFAULT 'default_value'
+
+            ALTER TABLE db_name DROP COLUMN column_title
+
+            ALTER TABLE db_name RENAME COLUMN column_title TO new_column_title
+
+            Will still drop columns with data in it
+
+        Structuring Relational Data
+
+            Could use spreadsheet
+
+            Crow's Foot Notation
+
+                Standard way to represent schema
+
+                Diagram Makers
+
+                    Database Diagram Online, Table Plus, Gliffy (Not SQL specific), Vertabelo, Quick Database Diagrams
+
+        Normalization
+
+            A DB design technique which organizes table in a manner that reduces redundancy and dependency of data
+
+            It divides larger table to smaller tables and links them using relationships
+
+        Indexing
+
+            A DB index is a special data structure that efficiently stores column values to speed up row retrieval via SELECT and WHERE queries
+
+            CREATE INDEX index_name ON table_name (column_name)
+
+            CREATE INDEX index_name ON table_name (column1_name, column2_name)
+
+            DROP INDEX full_name
+

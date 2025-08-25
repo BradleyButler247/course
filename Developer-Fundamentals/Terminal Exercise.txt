@@ -1,0 +1,37 @@
+Part 1
+    mkdir first
+
+    cd first
+
+    touch person.txt
+
+    mv person.txt another.txt
+
+    cp another.txt copy.txt
+
+    rm copy.txt
+
+    cp -r first second
+
+    rm -rf second
+
+Part 2
+    man gives a manual to the provided command; up & down key; q
+
+    ls -l provide a list of all files in the directory that aren't hidden and some additional information; ls -a displays all files in the directory including hidden files
+
+    ctrl + left/right arrow keys
+
+    ctrl + e
+
+    ctrl + a
+
+    ctrl + w
+
+    a terminal is a text input/output environment, a shell is a command line interpreter
+
+    an absolute path is the complete file path starting from the root directory while a relative path is the file path from the current directory
+
+    flags are how we enhance commands, -l -a -rf
+
+    the r removes the folders and and goes through each file/folder the f forces its removal

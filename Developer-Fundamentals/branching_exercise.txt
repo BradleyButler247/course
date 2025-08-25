@@ -1,0 +1,10 @@
+Part 1
+    git checkout -b branch_name
+
+    A fast forward merge has a straight line of history while a recursive merge has multiple lines
+
+    git checkout branch_name
+
+    git branch -d
+
+    Merge conflicts occur when different changes are made to the same line of the same file or one person edits a file and another deletes the same file

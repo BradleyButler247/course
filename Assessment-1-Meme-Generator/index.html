@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Generator</title>
+    <link rel="stylesheet" href="app.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+
+<body>
+    <h1>Build a meme!</h1>
+    
+    <form action="">
+        <div id="top-label">
+            <label for="top-text">Top text : &nbsp;</label>
+        </div>
+        <div id="top-input">
+            <input type="text" id="top" placeholder="Type upper text here">
+        </div>
+        <br>
+        <div id="bottom-label">
+            <label for="bottom-text">Bottom text : &nbsp;</label>
+        </div>
+        <div id="bottom-input">
+            <input type="text" id="bottom" placeholder="Type lower text here">
+        </div>
+        <br>
+        <div id="url-label">
+            <label for="img-url">Image URL : &nbsp;</label>
+        </div>
+        <div id="url-input">
+            <input type="url" id="url" placeholder="Paste image URL here">
+        </div>
+    </form>
+
+    <button type="submit" id="create" size="20">Create your meme!</button>
+
+    <h2>The finished product :</h2>
+
+    <div id="finished"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

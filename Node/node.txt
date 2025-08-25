@@ -1,0 +1,285 @@
+What is Node?
+
+    Server-side JS
+
+    Can be used for general purpose scripting
+
+Why use Node?
+
+    The entire stack (frontend & backend) can be JS
+
+    There is an extensive set of add-on libraries via npm
+
+        Many can also be used in client-side JS
+        
+    Widely used
+
+    Node is not as good at serve-side computation as python
+
+        This is why data-science & machine-learning is typically done in python
+
+    Good with handling simultaneous processing and streaming data
+
+
+
+Starting Node
+
+    To run a specific file
+
+        In terminal run:
+
+            node script.js
+
+    To open an interactive REPL
+
+        In terminal run:
+
+            node
+
+
+
+NPM & package.json
+
+    NPM (Node Package Manager)
+
+        Massive registry of add-on libraries
+
+        Get packages on npm website
+
+            npmjs.com
+
+        Starting a project with NPM
+
+            In terminal run:
+
+                cd my-project
+
+                npm init
+
+                    This will create package.json with metadata and dependencies
+
+                        Basically requirements.txt but a JSON file
+
+        Installing Packages
+
+            In root project directory in terminal
+
+                npm install <package>
+
+                    For example 'npm install axios'
+
+                
+            Always add node_modules to .gitignore
+
+            When cloning an existing project from GitHub or if you lose node_modules run:
+
+                npm install
+
+            This will download all packages in packages.json
+
+        Using Libraries
+
+            Refer to guestList.js
+
+            const package = require('package')
+
+            const axios = require('axios')
+
+                Then we can run axios.get(), axios.post() etc.
+
+            const faker = require('faker')
+
+                faker.name.findName()
+
+        Node Process Library
+
+            Node provides a global object, process, for managing the currently running script
+
+            Process allows us to:
+
+                Access environmental variables
+
+                See the command-line arguments passed to the script
+
+                Kill the script
+
+            process.env allows us to access environment variables
+
+                process.env.variable
+
+                In terminal we can write:
+
+                    color='pink'
+
+                Then run node then we can run:
+
+                    process.env.color
+
+            process.argv is an array of command-line arguments given to start this program
+
+                process.argv[index]
+
+                Refer to printArgs.js
+
+            process.exit will exit the program immediately and return code to the shell
+
+                process.exit(exit_code)
+
+Node Modules
+
+    Modules are the way to share code across different files in a Node project
+
+    Importing a project file
+
+        const project_name = require('./project_name')
+
+            This is a relative file path so we use ./ (current directory) or ../ (parent directory)
+
+            To access the data from the file we must include the following in the file:
+
+                module.exports = {
+                    variable_name: variable_name,
+                    function_name: function_name,
+                    class_name: class_name
+                }
+
+        Then we can call a function from the project_name file using:
+
+            project_name.function_name
+
+        We can also deconstruct the exports object:
+
+            const {variable_name, function_name, class_name} = require('./project_name')
+
+                This way we don't need to run project_name.function_name we can run:
+
+                    function_name(), variable_name, class_name on their own
+
+Reading & Writing
+
+    Error-first Callback
+
+    File System Module
+
+        The fs module is built-in and provides an interface to your local file system
+
+        const fs = require('fs')
+
+    Reading Files
+
+        fs.readFile(path, encoding, callback)
+
+            path: path to file (relative to working directory)
+
+            encoding: how to interpret file
+
+                For text files it is almost alway utf-8
+
+                For binary files (Like images) omit this argument
+
+            callback: function that takes error and data
+
+            For example: 
+
+                const fs = require('fs');
+
+                fs.readFile('poem.txt', 'utf8', (err, data) => {
+                    if (err) {
+                        console.log("ERROR:", err);
+                        process.kill(1)
+                    }
+                    console.log("DATA...", data)
+                })
+
+Node vs Browser
+
+    The global object isn't window it's global
+                
+    Node doesn't have document & DOM methods
+
+
+****************************************************************************************************************************************************************
+
+Testing with Jest & Node
+
+    import functions from file
+
+    test('Description of test', function() {
+        const res = function(input)
+        expect(res).toEqual(expectedOutput)
+    })
+
+    Organization
+
+        Naming 
+
+            File_Name.test.js
+
+        File Location
+
+            Place the files in the same directory as the JS file it tests
+
+            Alternatively you can organize all tests into a '__tests__' folder
+
+        Configuring Tests
+
+            If I have package.json I don't need additional configs
+
+            If I do not have package.json I need to create a jest.config.js file
+
+                It can be empty but I do need one
+
+    Running Tests
+
+        Run all tests with the 'jest' command
+
+        Run specific test files with jest File_Name.test.js
+
+    Describe
+
+        Refer to square.test.js
+
+        Describe allows us to group related tests together
+
+    Matchers
+
+        Refer to matchers.test.js
+
+        Can see complete list on jest docs under using matchers tab
+
+        .toEqual(obj)
+
+            Has the same value (Diff obj with the same values)
+
+            obj1 = x
+            obj2 = x
+
+            expect(obj1).toEqual(obj2)
+
+        .toBe(obj)
+
+            Is the same obj(Diff obj with the same values are not)
+
+            obj1 = obj2
+
+            expect(obj1).toBe(obj2)
+
+        .toContain(sought)
+
+            Does obj/arr contain this item
+
+        .not.
+
+            Add before matcher to invert
+
+    Before/After
+
+        Runs code before or after each test
+
+        Refer to cart.test.js
+
+        BeforeEach()/AfterEach() will run before/after each test
+
+        BeforeAll()/AfterAll() will run before the first test and after the last test
+
+        

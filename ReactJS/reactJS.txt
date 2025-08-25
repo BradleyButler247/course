@@ -1,0 +1,1620 @@
+Front End Framework
+
+    Larger JS libraries
+
+    Provide "blueprint" for apps
+
+    Other front end frameworks
+
+        Angular, Ember, & Vue
+
+React Components
+
+    How we make outlines for repeated structures with different data
+
+        i.e. Instagram posts, Reddit posts, etc.
+
+    Pieces of UI & view logic
+
+    To use react in our HTML file we need to import the scripts as follows: 
+
+        <script src="https://unpkg.com/react/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+        <script src="MovieList.js" type="text/jsx"></script>
+
+    The last file is our react file
+
+    Babel transpiles jsx code into js code
+
+    At the bottom of the react file we need to use the following to insert our code:
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+
+            App is the tope level component that will contain many other components to create the entire page
+
+Class Component vs Functional Component
+
+    Class Component
+
+        class Shiba extends React.Component {
+           render() {
+               return < img src="https://66.media.tumblr.com/8844e689de079e6134709eba05acccd1/tumblr_ohtx6cUWOi1voqnhpo5_250.png" />
+           }
+       }
+
+    Functional Component
+
+        const SharPei = () => (
+           <img src="https://i.pinimg.com/originals/60/16/ea/6016eaad1a6779310b73cdd002cc974e.jpg" />
+       )
+
+JSX Components
+
+    To add a variable in an HTML element:
+
+        const RandomNum = () => {
+           const rand = Math.floor(Math.random() * 10) + 1;
+           return <h3>{rand}</h3>
+       }
+
+
+     To add properties to your function:
+
+        const RandomChoice = (props) => {
+           const idx = Math.floor(Math.random() * props.choices.length);
+           const choice = props.choices[idx];
+           return (
+               <div>
+                   <h4>Random Choice is: {choice}</h4>
+               </div>
+           )
+       }
+
+        Then in App.js:
+
+            <RandomChoice choices={['red', 'green', 'yellow']} />
+
+
+     To add multiple props:
+
+        const Animal = (props) => {
+           return (
+		         <ul>
+		         	<li>Emoji: {props.emoji}</li>
+		         	<li>Name: {props.name}</li>
+		         	<li>Species: {props.species}</li>
+		         	<li>IsCute: {props.isCute ? '✅' : '❌'}</li>
+		         </ul>
+	        );
+       };
+
+        Then in App.js:
+
+            <Animal name="Patrick" species="Red Fox" emoji="🦊" />
+
+
+     To pass in non-string values they must be wrapped in {}
+
+
+     JSX Conditionals
+
+        <li>IsCute: {props.isCute ? '✅' : '❌'}</li>
+
+        Can also use if/else-if/else statements
+
+            const Bouncer = (props) => {
+               let reply;
+               if (props.age < 18) {
+                   reply = "Sorry kid, you can't come in"
+               } else if (props.age < 21) {
+                   reply = "You can come in, but no drinking"
+               } else {
+                   reply = <span>
+                       Come in, you CAN drink!
+                       <img src="https://media.giphy.com/media/eXg8Ij7JgnyDu/giphy.gif" />
+                   </span>
+               }
+               return (
+                   <div>
+                       <p>
+                           <b>Bouncer:</b> How old are you?
+                       </p>
+                       <p>
+                           <b>You:</b> I am  {props.age} years old
+                       </p>
+                       <p>
+                           <b>Bouncer:</b> {reply}
+                       </p>
+                   </div>
+               )
+           }
+
+    
+   JSX Loops
+
+        Map is the most common way to iterate over an array
+
+        Map does not mutate the original array
+
+            const TodoList = (props) => {
+               return (
+                   <div>
+                       <h4>Todo List</h4>
+                       <ul>{ props.todos.map( t => 
+                           (
+                               <li>
+                                   <input type="checkbox" />
+                                   <b>{t}</b>
+                               </li>
+                           )
+                       )}</ul>
+                   </div>
+               )
+           }
+
+
+     Default Props
+
+        const RandomNumRange = ({ min = 1, max = 10 }) => {
+           const rand = Math.floor(Math.random() * (max - min)) + min;
+           return <h1>Rand Is: {rand}</h1>
+       }
+
+        Destructuring props by including { min = 1, max = 10 } will set default values for props
+
+
+     Props Children
+
+        In an Alert component:
+
+            const Alert = (props) => {
+               return (
+                   <div>
+                       🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+                       <p>{props.children}</p>
+                       🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+                   </div>
+               )
+           }
+
+        Or if children is our only prop:
+
+            const Alert = ({ children }) => {
+               return (
+                   <div>
+                       🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+                       <p>{children}</p>
+                       🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+                   </div>
+               )
+           }
+
+        Then in App.js:
+
+            <Alert>
+               <h1>HELLO!!!!</h1>
+           </Alert>
+
+
+Create React App
+
+    npx create-react-app app-name
+
+        Creates skeleton
+
+    npm start
+
+        Starts server
+
+
+    To import functions into our app with a named export:
+
+        At the bottom of the export file:
+
+            export { functionName }
+
+        At the top of the import file:
+
+            import { functionName } from './functionFileFolder'
+
+    
+    To import functions into our app with a default export:
+
+            At the bottom of the export file:
+
+                export default fileName
+            
+            At the top of the import file:
+
+                import fileName from './functionFileFolder'
+    
+
+    You can use default and named exports in the same file
+
+            At the bottom of the export file:
+
+                export default fileName
+                export { functionName }
+
+            At the top of the import file:
+
+                import fileName, { functionName } from './functionFileFolder'
+
+    
+    Put components in the src folder
+
+    In every react file we need to include:
+
+        import React from 'react'
+
+
+CSS Convention
+
+    Setting class/id:
+
+        <img src={logo} className="App-logo" alt="logo" id="logo-id" />
+
+    Make a CSS file fo reach component
+
+    For a House component
+
+        Make House.css
+
+        Import House.css at the top of House.js
+
+        All classNames will then begin with "House"
+        
+    Style attributes
+
+        Set dynamic attributes in line
+
+        In App:
+
+            <Alert variant='success'>
+                <h1>Welcome Back!</h1>
+            </Alert>
+
+        In Alert.js
+
+            const Alert = ({ variant, children }) => (
+                const colors = {
+                    success: 'green',
+                    danger: 'red'
+                }
+
+                return (
+                    <div style={{ backgroundColor: colors[variant] }}>
+                        {children}
+                    </div> 
+                )
+            )
+
+            export default Alert
+
+
+React Fragments
+
+    Instead of wrapping everything in a <div></div> we can use fragments
+
+        return (
+            <React.Fragment>
+                <h1>My Fragment 1</h1>
+                <h1>My Fragment 2</h1>
+                <h1>My Fragment 3</h1>
+            </React.Fragment>
+        );
+
+    or
+
+        return (
+            <>
+                <h1>My Fragment 1</h1>
+                <h1>My Fragment 2</h1>
+                <h1>My Fragment 3</h1>
+            </>
+        );
+
+
+Event & State
+
+    Events
+
+        To add event listeners in react we put it inline in our JSX
+
+            <button onClick={ functionToRun }></button>
+
+        We do not add () because we don't want to execute the function until the button is clicked
+
+        To include a function that requires arguments
+
+            <button onClick={ () => functionToRun(arg) }></button>
+
+    States
+
+        Data specific to a component
+
+        Can be changed, unlike props
+
+            Hide/show data, fetch API data, themes/colors/style
+
+        State Hooks are how we will change state in a function
+
+        useState
+
+            Use state returns a piece of state and a function to change it
+
+            At top of component file:
+
+                import React, { useState } from "react";
+
+                const Counter = () => {
+                    const [count, setCount] = useState(99);
+                    return (
+                      <>
+                        <h1>Count is {count}</h1>
+                        <button onClick={() => setCount(count + 1)}>Add</button>
+                        <button onClick={() => setCount(count - 1)}>Subtract</button>
+                      </>
+                    );
+                }   
+
+            
+            Component that state in used in is rerendered every time state changes
+
+
+        If we want to update state twice in one function we cannot just call useState twice in a single function
+
+        For example:
+
+            const [num, setNum] = useState(0)
+
+            const clickUp = () => {
+                setNum(num + 1)
+            }
+
+            ***** This will not work *****
+            const doubleUp = () => {
+                setNum(num + 1)
+                setNum(num + 1)            
+            }
+
+            ***** This will work *****
+            const doubleUp = () => {
+                setNum(n => n + 1)
+                setNum(n => n + 1)            
+            }
+
+        Updating the state in this manor will force the second state update to wait until all previous state updates have completed before it runs
+
+        Deleting using state
+
+
+            const NumberItem = ({ number, remove }) => {
+                const handleRemove = () => {
+                    remove(number);
+                };
+                return (
+                    <li>
+                        <button onClick={handleRemove}>{number}</button>
+                    </li>
+                );
+            };
+
+
+
+            const NumbersList = () => {
+                const [numbers, setNumbers] = useState([2, 5, 7, 11, 12, 18]);
+                const remove = (num) => {
+                    setNumbers(numbers.filter(n => n !== num));
+                };
+
+                return (
+                    <ul>
+                        {numbers.map(n => (
+                            <NumberItem number={n} remove={remove} />
+                        ))}
+                    </ul>
+                );
+            } 
+
+            
+
+
+            Removing the value from the array like this:
+
+                const remove = (num) => {
+                    setNumbers(numbers.filter(n => n !== num));
+                };
+
+            Is ideal because it will update the state of the array without altering the original
+
+            The component:
+
+                <NumberItem number={n} remove={remove} />
+
+            Is the child of: 
+
+                <NumbersList />
+
+            NumberItem accepts each number from the array and the remove function through the map function
+
+                Structuring this way will allow us to call the follow each time it is clicked:
+
+                    const handleRemove = () => {
+                        remove(number);
+                    };
+
+                Since we passed the remove function with the with into the NumbersList function we can set the onClick function handleRemove which calls the remove function
+
+                Calling the remove function through handleRemove allows us to call the remove function on a specified number
+
+
+        Key props
+
+            Key props are a way to identify child props amongst siblings
+
+            Most often it is the ID from the database
+
+            uuid is an effective package for creating random and unique keys
+
+            Setting key prop
+
+                <NumberItem number={n} remove={remove} key={someNum} />
+
+
+        Mutable data structures
+
+            function addCircle(newColor) {
+                // FIXED make a *new* array so reference changes
+                setCircles(circles => [...circles, newColor]);
+            }
+
+            Calling the function this way makes react recognize the change and rerender the component
+
+            Refer to /Course/ReactJS/react-state-patterns-demo/colorful-circles/src
+
+
+        Nested Mutable States
+
+            Refer to /Course/ReactJS/react-state-patterns-demo/colorful-circles/src/PositionedColorfulCircles.js
+
+        
+Testing
+
+    We can use Jest or react-testing-library
+
+    Smoke Test
+
+        Does the component render or does it blow up?
+
+
+        import React from "react";
+        import { render } from "@testing-library/react";
+        import FixedComponent from "./FixedComponent";
+        
+        // smoke test
+        it("renders without crashing", function() {
+            render(<FixedComponent />);
+        });
+
+
+    Snapshot Test
+
+        Does the rendering change?
+
+        When using render:
+
+            One method is to use asFragment 
+
+                Returns the underlying DOM structure of the component
+
+
+        import React from "react";
+        import { render } from "@testing-library/react";
+        import FixedComponent from "./FixedComponent";
+
+        // snapshot test
+        it("matches snapshot", function() {
+            const {asFragment} = render(<FixedComponent />);
+            expect(asFragment()).toMatchSnapshot();
+        });
+
+
+        When running tests in terminal:
+
+            Enter 'u' to update snapshot
+
+
+    Query Methods
+
+        Other render methods
+
+            .getByText()
+
+                Find first matching element by its text
+
+            .queryByText
+
+                Same as getByText but does not throw error if element can't  be found
+
+            .getAllByText()
+
+                Same as getByText() but it returns all elements
+
+            .queryAllByText()
+
+                Same as queryByText but for all elements not just one
+
+            .getByPlaceholder()/queryByPlaceholder()
+
+                Finds first matching element by placeholder text
+
+            .getAllByPlaceholder()/queryAllByPlaceholder()
+
+            .getByTestId()/queryByTestId()
+
+                Find matching element by data-testid attribute
+
+                Helpful as last resort 
+
+            .getAllByTestId()/queryAllByTestId()
+
+            Much more refer to docs on testing-library.com
+
+
+            In Counter.test.js
+
+                import React from "react";
+                import { render, fireEvent } from "@testing-library/react";
+                import Counter from "./Counter";
+
+                it("handles button clicks", function() {
+                    const { getByText } = render(<Counter />);
+                    const h2 = getByText("Current count: 0");
+
+                    // click on the button
+                    fireEvent.click(getByText("Add"));
+
+                    // is the count different?
+                    expect(h2).toHaveTextContent("1");
+                    expect(h2).not.toHaveTextContent("0");
+                });
+
+
+    Jest Matchers Extended
+
+        Jest-dom is included in create-react-app
+
+        .toHaveClass()
+
+            Check whether element has certain class
+
+        .toBeInTheDocument()
+
+            Checks if element is rendered in the doc
+
+        .toContainHTML()
+
+            Check if element contains HTML
+
+        .toBeEmpty()
+
+            Checks whether element has content
+
+    Firing Events Testing
+
+        fireEvent.click(HTMLElement)
+
+            Fire on click
+
+        fireEvent.submit(HTMLElement)
+
+            Fire on submit
+
+        fireEvent.input(HTMLElement)
+
+            Fire on input event
+
+    
+    Debugging Tests
+
+        const { debug } = render(<Counter />)
+        debug()
+        <Some Event>
+        debug()
+
+            This will show the component before and after the event
+
+            "test:debug": "react-scripts --inspect-brk test --runInBand",
+
+                Then we can run npm run test:debug in the terminal
+
+                This will cause the test to pause at any point that 'debugger' is placed in the test
+
+                We can then check the execution of the code in the browser dev tools
+
+    
+Forms
+
+    Refer to /react-forms-demo/videodemo/forms-demo/src/UserForm.js
+
+    Forms are built using a react component
+
+    Forms naturally manage their own internal state
+
+    To have a form input using react we set the value, then update the state using an onChange function
+
+        The onChange function will update the state of whatever variable we set the input to
+
+    
+    Passing Form Data
+
+        Refer to:
+
+            /react-forms-demo/videodemo/forms-demo/src/ShoppingList.js
+
+            /react-forms-demo/videodemo/forms-demo/src/Item.js
+
+            /react-forms-demo/videodemo/forms-demo/src/NewItemForm.js
+
+
+    To set unique keys:
+
+        npm install uuid
+
+        import { v4 as uuid } from 'uuid';
+
+            The v4 is because we want v4
+
+        Refer to:
+        
+            /react-forms-demo/videodemo/forms-demo/src/ShoppingList.js
+
+    
+    Testing React Forms
+
+        Refer to:
+
+            /react-forms-demo/videodemo/forms-demo/src/ShoppingList.test.js
+
+        it("should add new item", function () {
+            const { queryByText, getByLabelText } = render(<ShoppingList />);
+
+            const input = getByLabelText("Product");
+            const btn = queryByText("Add Item");
+
+            expect(queryByText('Product Name: Chocolate Milk')).not.toBeInTheDocument();
+
+            fireEvent.change(input, { target: { value: 'Chocolate Milk' } });
+            fireEvent.click(btn);
+
+            expect(queryByText('Product Name: Chocolate Milk')).toBeInTheDocument();
+        })
+
+
+    Uncontrolled Components
+
+        No state involved at all
+
+            React is blind until submit
+
+        Handled completely by the DOM
+
+        Necessary for file inputs
+
+
+    Validation
+
+        Useful for UI
+
+        Formik is a useful way to validate forms
+
+        Material-ui is useful for prebuilt components
+
+        There is a formik-material-ui library
+        
+        reactstrap is bootstrap for react
+
+
+Effects & Refs
+
+    useEffect
+
+        Allows us to use side effects
+
+            Fetching API data, starting a timer, manually changing the DOM, etc.
+
+        If we made a timer using state:
+
+
+            const timer = () => {
+                const [seconds, setSeconds] = useState(0)
+                setInterval(() => {
+                    setSeconds(seconds => seconds + 1)
+                }, 1000)
+
+            return <h1>{seconds}</h1>
+
+            }
+
+
+        This will cause the timer function to be called every time the component is rendered
+
+            The component will render every time the state is changed 
+
+                This will cause the component to render
+
+                    This will cause the state to change
+
+                        etc.
+
+        useEffect(function)
+
+            This will run every time the component is rendered
+
+
+                    function EffectExample() {
+                    
+                        const [num, setNum] = useState(0);
+
+                        function increment(evt) {
+                            setNum(n => n + 1);
+                        };
+
+                        useEffect(function setTitleOnRerender() {
+                            document.title = `WOW${"!".repeat(num)}`;
+                        });
+
+                        return (
+                            <div>
+                                Let's get excited.
+                                <button onClick={increment}>Get more excited.</button>
+                            </div>
+                        );
+                    }
+
+
+        useEffect(function, interval)
+
+            This will run after each specified interval
+
+
+                    function TimerWithRef() {
+                        const timerId = useRef();
+                        let [count, setCount] = useState(0);
+
+                        useEffect(function setCounter() {
+                            console.log("EFFECT RAN!");
+                            timerId.current = setInterval(() => {
+                                setCount(c => c + 1);
+                            }, 1000);
+
+                            return function cleanUpClearTimer() {
+                                console.log("Unmount ID", timerId.current);
+                                clearInterval(timerId.current);
+                            };
+                        }, [timerId]);
+
+                        return (
+                            <div>
+                                <h1>{count}</h1>
+                                <p>(Timer id is {timerId.current}.)</p>
+                            </div>
+                        );
+                    }                       
+
+
+            timerId is our reference for the interval
+
+            We could also use an empty array instead of timerId and it will only run on the first render and that is all
+
+            useEffect cannot be an async function itself but it can contain an async function
+
+                We need to create the async function then call it
+
+
+                        function ProfileViewer() {
+                            const [profile, setProfile] = useState(null);
+
+                            // this is called *after* component first added to DOM
+                            useEffect(function fetchUserWhenMounted() {
+
+                                // create the async function
+                                async function fetchUser() {
+                                
+                                    const userResult = await axios.get(
+                                        "https://api.github.com/users/elie"
+                                    );
+
+                                    setProfile(userResult.data);
+                                }
+
+                                // call the async function
+                                fetchUser();
+                            }, []);
+
+                            return (
+                                <div>{profile ? <h2>{profile.name}</h2> : <i>(loading)</i>}</div>
+                            );
+                        };
+
+
+            We can also call the useEffect function anytime a prop state changes
+
+                    const BASE_URL = "https://api.github.com/users";
+
+                    /** GitHub Profile Component --- shows info from GH API */
+
+                    function ProfileViewerWithSearch() {
+                        const [profile, setProfile] = useState(null);
+                        const [username, setUsername] = useState("elie");
+
+                        function search(username) {
+                            setUsername(username);
+                        };
+
+                        // this is called after component is first added to DOM
+                        // and every time username changes
+                        useEffect(function fetchUserOnUsernameChange() {
+
+                            async function fetchUser() {
+                                const userResult = await axios.get(`${BASE_URL}/${username}`);
+                                setProfile(userResult.data);
+                            }
+
+                            fetchUser();
+                        }, [username]);
+
+                        return (
+                            <div>
+                                <ProfileSearchForm search={search} />
+                                {profile ? <h2>{profile.name}</h2> : <i>(loading)</i>}
+                            </div>
+                        );
+                    };
+
+
+            Cleaning up
+
+                If we have an interval we need to stop the interval
+
+
+                        function TimerWithRef() {
+                            const timerId = useRef();
+                            let [count, setCount] = useState(0);
+
+                            useEffect(function setCounter() {
+                                console.log("EFFECT RAN!");
+
+                                timerId.current = setInterval(() => {
+                                  setCount(c => c + 1);
+                                }, 1000);
+
+                                return function cleanUpClearTimer() {
+                                    console.log("Unmount ID", timerId.current);
+                                    clearInterval(timerId.current);
+                                };
+
+                            }, [timerId]);
+
+                            return (
+                                <div>
+                                    <h1>{count}</h1>
+                                    <p>(Timer id is {timerId.current}.)</p>
+                                </div>
+                            );
+                        }
+
+
+                The clean up function will run every time before the function is called except for the first time
+
+
+    useRef
+        
+        Access underlying DOM element, setting up/clearing timers, etc.
+
+        Persists through renders
+
+        
+Custom Hooks
+
+    Good to use custom hooks to:
+
+        Abstract logic, handle repeated events, generate JSX
+
+    Toggle hook example:
+
+        -----------------------------------------------------------------------------------------
+
+            This custom hook takes a piece of state and makes it not that state
+
+            It is just a boolean switch
+
+                true -> false : false -> true
+
+
+                    import React, { useState } from 'react';
+                    
+                    // Define component to import/export
+                    // The initialState variable defaults to true but can be specified when useToggleState is called
+                    const useToggleState = (initialState = true) => {
+
+                        // Declare state to toggle
+                        const [state, setState] = useState(initialState);
+                        
+                        // Define function for manipulating state
+                        const toggleState = () => {
+                            setState(state => !state)
+                        }
+
+                        // Return the destructured state
+                        return [state, toggleState]
+                    }
+                    export default useToggleState;
+
+        -----------------------------------------------------------------------------------------
+
+            We then import the previously defined hook to switch out mood clicker between happy/sad or the them between light/dark
+
+
+                    import React from "react";
+                    import useToggleState from './hooks/useToggleState'
+                    import './MoodClicker.css'
+
+                    const MoodClicker = () => {
+                        
+                        // Instead of calling useState we use the name of our custom hook component
+                            // In this case it is useToggleState
+                        const [isHappy, toggleIsHappy] = useToggleState(true)
+                        const [isDarkMode, toggleIsDarkMode] = useToggleState(false);
+
+                        return (
+                            <div className={isDarkMode ? 'Clicker-dark' : 'Clicker-light'}>
+                                <h1>{isHappy ? '😀' : '😭'}</h1>
+                                <button onClick={toggleIsHappy}>Change Mood</button>
+                                <button onClick={toggleIsDarkMode}>Toggle Dark/Light Mode</button>
+                            </div>
+                        )
+                    }
+                    export default MoodClicker;
+
+        -----------------------------------------------------------------------------------------
+
+
+    Using localStorage in custom hook
+
+        -----------------------------------------------------------------------------------------
+
+
+            import React, { useState, useEffect } from "react";
+
+            const useLocalStorageState = (key, defaultValue) => {
+  
+                const [state, setState] = useState(() => {
+                    let value
+                    try {
+                        // This will try to get the provided key from local storage if it is available and it it is not it will use the default value
+                        value = JSON.parse(
+                            window.localStorage.getItem(key) || JSON.stringify(defaultValue)
+                        )
+                    } catch (e) {
+                        console.log(e)
+                        value = defaultValue;
+                    }
+                    return value;
+                })
+
+                // This will set the local storage anytime the key or state is changed
+                useEffect(() => {
+                    window.localStorage.setItem(key, JSON.stringify(state))
+                    }, [key, state])
+
+                 return [state, setState];
+            }
+            export default useLocalStorageState;
+
+
+        -----------------------------------------------------------------------------------------
+
+            This will render a dropdown of colors that when picked will change the color of the h1
+
+                The color is then saved to local storage so when it is rendered it will be the color last selected    
+
+                    import React from "react";
+                    import useLocalStorageState from './hooks/useLocalStorageState';
+
+                    const ColorPicker = () => {
+                        const [color, setColor] = useLocalStorageState('color', 'teal');
+                        const changeColor = e => {
+                            setColor(e.target.value)
+                        }
+                        return (
+                            <>
+                                <h1 style={{ color }}>Your Color Is  {color}</h1>
+                                <select value={color} onChange={changeColor}>
+                                    <option value="red">Red</option>
+                                    <option value="teal">Teal</option>
+                                    <option value="orange">Orange</option>
+                                    <option value="yellow">Yellow</option>
+                                    <option value="purple">Purple</option>
+                                </select>
+                            </>
+                        )
+                    }
+                    export default ColorPicker;
+
+        -----------------------------------------------------------------------------------------
+
+    Custom formfield hooks
+
+        -----------------------------------------------------------------------------------------
+
+
+            import React, { useState } from "react";
+
+            const useFields = (initialState) => {
+            const [formData, setFormData] = useState(initialState);
+
+                // This is our standard handleChange function for form data
+                const handleChange = e => {
+                    const { value, name } = e.target;
+                    // Update the form data array with the previous form data and the update name and corresponding value
+                    setFormData(formData => ({
+                        ...formData,
+                        [name]: value
+                    }))
+                }
+
+                const resetFormData = () => {
+                    setFormData(initialState)
+                }
+                return [formData, handleChange, resetFormData];
+            }
+            export default useFields;
+
+        -----------------------------------------------------------------------------------------
+
+
+            import React from 'react';
+            import useFields from './hooks/useFields';
+
+            const SignupForm = () => {
+                // We deconstruct our custom hook
+                const [formData, handleChange, resetForm] = useFields({
+                    username: '',
+                    email: '',
+                    password: ''
+                })
+                // We can use our resetForm funtion from our component for handling submission
+                const handleSubmit = e => {
+                    e.preventDefault();
+                    resetForm();
+                }
+                return (
+                    <form onSubmit={handleSubmit}>
+                    // In our inputs we call the handleChange function from our component using an onChange call
+                        <input
+                            type="text"
+                            name="username"
+                            value={formData.username}
+                            onChange={handleChange}
+                            placeholder="username"
+                        />
+                        <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            placeholder="email"
+                        />
+                        <input
+                            type="text"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            placeholder="password"
+                        />
+                        <button>Submit</button>
+                     </form>
+                )
+            }
+            export default SignupForm;
+
+        -----------------------------------------------------------------------------------------
+
+    useFetch Hook
+
+        -----------------------------------------------------------------------------------------
+
+            This will be used to make an HTTP request
+
+
+                import { useEffect, useState } from "react";
+
+                const useFetch = (url, options = {}) => {
+
+                    const [response, setResponse] = useState(null);
+                    const [error, setError] = useState(null);
+                    const [isLoading, setIsLoading] = useState(true);
+
+                    // after the first render, fetch our data
+                    useEffect(() => {
+                        const fetchData = async () => {
+                            
+                            try {
+                                // Fetch an API req to a given url
+                                const res = await fetch(url);
+
+                                // Await for a response to convert to json
+                                const json = await res.json();
+
+                                //Set response state to json response
+                                setResponse(json);
+                            } catch (error) {
+                                // If we get an error we set the error state to the response
+                                setError(error);
+                            }
+
+                            // Sets loading state to false since we have received a response
+                            setIsLoading(false);
+                        };
+                        fetchData();
+                    }, [url]);
+
+                    return { response, error, isLoading };
+                };
+                export default useFetch;
+
+        -----------------------------------------------------------------------------------------
+
+
+            import React from "react";
+            import useFetch from "./hooks/useFetch";
+
+            const DogDetail = () => {
+                const data = useFetch("https://dog.ceo/api/breeds/image/random");
+                if (data.isLoading) {
+                    return <div>Loading...</div>;
+                }
+                if (data.error) {
+                    return <div>Sorry, something went wrong :(</div>
+                }
+                const { status, message } = data.response;
+                
+                return (
+                    <div className="App">
+                        <div>
+                            <h3>{status}</h3>
+                            <div>
+                                <img src={message} alt="avatar" />
+                            </div>
+                        </div>
+                    </div>
+                );
+            };
+            export default DogDetail;
+
+
+Server vs Client Routing
+
+    react-router-dom install
+
+        npm install react-router-dom
+
+    import { BrowserRouter, Route } from "react-router-dom";
+
+
+    Route Component 
+
+            <Route exact path="/drink">
+                <Drink />
+            </Route>
+
+        Component acts as translation service between routes and components
+
+    Route Links
+
+            import { NavLink } from "react-router-dom";
+
+            <NavLink exact to="/drink">
+                Drink
+            </NavLink>
+
+        If the nav component is put in a specific component:
+
+            <Route exact path="/">
+                <NavLink exact to="/drink">
+                    Drink
+                </NavLink>
+
+                <Home />
+            </Route>
+
+        It will only display on that route
+
+
+
+Router Params
+
+    URL Params
+
+        When defining our routes we can implement a parameter so we don't need to make each individual route
+
+            In Food.js:
+
+                function Food() {
+                    const { name } = useParams();
+                    const [src, setSrc] = useState(null);
+
+                    useEffect(function loadGiphyImgToSrc() {
+                        async function fetchGif(searchTerm) {
+                            let res = await axios.get(`${GIPHY_URL}/gifs/search`, {
+                                params: { q: searchTerm, api_key: "dc6zaTOxFJmzC" }
+                            });
+                            setSrc(res.data.data[0].images.original.url);
+                        }
+                        fetchGif(name);
+                    }, [name]);
+
+                    let img = src ? <img src={src} alt={name} /> : null;
+                    return (
+                        <div>
+                            <h1>Here's a pic of {name}.</h1>
+                            {img}
+                        </div>
+                    );
+                }
+
+            In App.js:
+
+                <div className="App">
+                    <BrowserRouter>
+                        <Nav />
+                        <Route exact path="/food/:name">
+                            <Food />
+                        </Route>
+                    </BrowserRouter>
+                </div>
+
+
+    Switch Component
+
+        Switch will only render the first matching route
+
+            <Switch>
+                <Route exact path="/about"><About /></Route>
+                <Route exact path="/contact"><Contact /></Route>
+                <Route exact path="/blog/new"><NewBlogForm /></Route>
+                <Route exact path="/blog/:slug"><Post /></Route>
+                <Route exact path="/blog"><BlogHome /></Route>
+                <Route exact path="/"><Home /></Route>
+                <Redirect to="/" />
+            </Switch>
+
+        In this example, without a switch we would render 
+
+            <Route exact path="/blog/:slug"><Post /></Route>
+            <Route exact path="/blog/new"><NewBlogForm /></Route>
+
+        Switch must be imported 
+
+            import { Route, Switch, Redirect } from "react-router-dom";
+
+    404 Route
+
+        Create 404 component:
+
+            function NotFound() {
+                return (
+                    <div>
+                        <h1>The page you're looking for doesn't exist.</h1>
+                    </div>
+                );
+            }
+
+        Then at the end of our switch:
+
+            <Switch>
+                <Route exact path="/about"><About /></Route>
+                <Route exact path="/contact"><Contact /></Route>
+                <Route exact path="/blog/new"><NewBlogForm /></Route>
+                <Route exact path="/blog/:slug"><Post /></Route>
+                <Route exact path="/blog"><BlogHome /></Route>
+                <Route exact path="/"><Home /></Route>
+
+                <Route><NotFound /></Route>
+
+            </Switch>
+
+    Redirect Component ---- Switch was replaced with Routes
+
+        React router we can mimic the behavior of server-side redirects
+
+        Useful after certain actions like submitting a form or admin login
+
+            return isAdmin ? <h1>Welcome Admin!</h1> : <Redirect to='/' />
+
+        Can be used in lieu of a catch-all 404 component
+
+        Using a redirect component
+
+            import { Route, Switch, Redirect } from "react-router-dom";
+
+            <Switch>
+                <Route exact path="/about"><About /></Route>
+                <Route exact path="/contact"><Contact /></Route>
+                <Route exact path="/blog/:slug"><Post /></Route>
+                <Route exact path="/blog"><BlogHome /></Route>
+                <Route exact path="/"><Home /></Route>
+
+                x
+
+            </Switch>
+
+    useHistory Redirect
+
+        useHistory object gives us access to the window.history object
+
+        The history object has .push(url), which adds URL to the sessio history
+
+            Unlike <Redirect>, hitting the back button will return here
+
+        ***** Refer to switch-and-redirects/src/Contact.js for useHistory *****
+
+    Testing React Router
+
+        We will use <MemoryRouter /> instead of <BrowserRouter />
+
+            import React from 'react';
+            import Nav from './Nav';
+            import {render} from '@testing-library/react';
+            import { MemoryRouter } from 'react-router-dom';
+
+            // basic tests
+            it('renders without crashing', function() {
+                render(
+                    <MemoryRouter>
+                        <Nav />
+                    </MemoryRouter>
+                );
+            });
+
+
+
+            it('matches snapshot', function() {
+                const container = render(
+                    <MemoryRouter>
+                        <Nav />
+                    </MemoryRouter>
+                );
+                expect(container.asFragment()).toMatchSnapshot();
+            });
+            // end basic tests
+
+
+
+            // full render
+            it('mounts without crashing', function() {
+                const { getByText } = render(
+                    <MemoryRouter>
+                        <Nav />
+                    </MemoryRouter>
+                );
+
+                const blogLink = getByText(/Blog/i);
+                expect(blogLink).toBeInTheDocument();
+            });
+ 
+        To use <App /> in our tests we need to put the browser router in the parent component
+
+        Instead of:
+        
+            function App() {
+                return (
+                    <div>
+                        <BrowserRouter>
+                            <Nav />
+                            <Routes />
+                        </BrowserRouter>
+                    </div>
+                );
+            }
+
+        We can use:
+
+            function App() {
+                return (
+                    <div>
+                        <Nav />
+                        <Routes />
+                    </div>
+                );
+            }
+            
+        Then in index.js:
+            
+            ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
+
+        In test file:
+
+            it('mounts without crashing', function() {
+                const { getByText } = render(
+                    <MemoryRouter initialEntries={['/about']}>
+                        <App />
+                    </MemoryRouter>
+                );
+                expect(getByText('This is the about page.')).toBeInTheDocument();
+            });
+
+Context
+
+    ***************************************** In CountContext *****************************************
+
+
+            import React from 'react';
+            const MyContext = React.createContext(defaultValue);
+            export default MyContext
+
+
+    ***************************************** In Child *****************************************
+
+
+            import { useState } from "react";
+            import GrandChild from "./GrandChild";
+            import CountContext from "./CountContext";
+
+            function Child() {
+                const [count, setCount] = useState(0);
+                const addToCount = () => {
+                    setCount(count => count + 1);
+                };
+                return (
+                    <CountContext.Provider value={count}>
+                        <div style={{
+                            border: '4px solid #0074d9',
+                            margin: '1rem',
+                            width: '500px'
+                        }}>
+                            <p>I'm the child!</p>
+                            <p>I own count it is {count}</p>
+                            <button onClick={addToCount}></button>
+                            <GrandChild  />
+                        </div>
+                    </CountContext.Provider>
+                );
+            }
+
+            export default Child;
+
+        Component we want to share context with needs to be wrapped in <CountContext.Provider value={count}>
+
+    ***************************************** In GreatGrandChild *****************************************
+
+
+            import { useContext } from "react";
+            import CountContext from "./CountContext";
+            import GreatGreatGrandChild from "./GreatGreatGrandChild";
+
+            function GreatGrandChild() {
+                const num = useContext(CountContext)
+                return (
+                    <div style={{
+                        border: '4px solid #7fdbff',
+                        margin: '1rem',
+                    }}>
+                        <p>I'm a great-grandchild!</p>
+                        <p>Count: {num}</p>
+                        <GreatGreatGrandChild/>
+                    </div>
+                );
+            }
+
+            export default GreatGrandChild;
+
+
+        We need to include the useContext hook since we are using context
+
+
+
+    Creating our own provider
+
+        In context file:
+
+                import React from "react";
+                export default React.createContext();
+
+
+        In provider file:
+
+                import ThemeContext from "./ThemeContext";
+                import { useState } from "react";
+
+                const ThemeProvider = ({ children }) => {
+                    const [color, setColor] = useState('olive');
+                    const toggleColor = () => {
+                        setColor(color => color === 'olive' ? 'orange' : 'olive');
+                    };
+                    return (
+                        <ThemeContext.Provider value={{ color, toggleColor }}>
+                            {children}
+                        </ThemeContext.Provider>
+                    );
+                };
+
+                export default ThemeProvider;
+
+
+        In App.js: 
+
+                import './App.css';
+                import ThemeProvider from "./ThemeProvider";
+                import Child from './Child';
+                import NavBar from './NavBar';
+
+                function App() {
+                    return (
+                        <div className="App">
+                            <ThemeProvider>
+                                <NavBar />
+                                <Child />
+                            </ThemeProvider>
+                        </div>
+                    );
+                }
+
+                export default App;
+
+    
+        In parent component (Child.js):
+
+                import { useState, useContext } from "react";
+                import GrandChild from "./GrandChild";
+                import CountContext from "./CountContext";
+                import ThemeContext from "./ThemeContext";
+
+                function Child() {
+                    const [count, setCount] = useState(0);
+                    const { color } = useContext(ThemeContext);
+                    const increment = () => {
+                        setCount(count => count + 1);
+                    };
+                    return (
+                        <CountContext.Provider value={{ count, increment }}>
+                            <div style={{
+                                border: '4px solid #0074d9',
+                                margin: '1rem',
+                                width: '500px'
+                            }}>
+                                <p>I'm the child!</p>
+                                <p>I own count it is {count}</p>
+                                <button style={{ color }} onClick={increment}>Add to Count</button>
+                                <GrandChild />
+                            </div>
+                        </CountContext.Provider>
+                    );
+                }
+
+                export default Child;
+
+
+        In NavBar.js:
+
+                import { useContext } from "react";
+                import ThemeContext from "./ThemeContext";
+
+                const NavBar = () => {
+                    const {color, toggleColor} = useContext(ThemeContext)
+                    return (
+                        <nav style={{backgroundColor:color}}>
+                            <span>WEBSITE</span>
+                            <button onClick={toggleColor}>Toggle Theme</button>
+                        </nav>
+                    )
+                }
+
+                export default NavBar;
+            
+
+
+        

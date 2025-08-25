@@ -1,0 +1,59 @@
+Git allows devs to track versions of their code over time
+
+Must use git init to initialize a repository with git before you can start using it
+
+git status will check if a git repository is already started
+
+To remove git repository use mf -rf .git to delete the git folder
+
+How to use git
+    git init - initiate repository
+
+    touch index.html - create new file
+
+    git add index.html - add specified file to staging area so that the changes will be commited to the repository next time we commited
+        git add . will add all files with changes to staging area
+    
+    git commit - commits changes to repository
+    git commit -m - allows us to connect a message with our commit
+
+    git log - shows the commits that have been made so far
+
+Branching
+    Default branch is master
+
+    branches allow people to work seperately on a file then merge them together after approval
+
+    git branch allows you to see what branches you have
+
+    git checkout -b name_of_brench will create a new branch and switch you to working in it in one line
+    
+    git branch -d name_of_branch will delete specified branch
+        If commits were made in branch you would like to delete you must merge the branch to use -delete
+
+        If commits were made and you want to delete the branch without merging use -d
+
+    git merge name_of_branch will merge specified branch with branch you are currently in
+        Depending on history of our commits, merge will either be a: 
+            Fast forward merge
+            Recursive merge
+
+git push will push the master branch to github
+
+git push origin branch_name will push a branch that is not the master branch
+
+To clone repo from github
+    Click clone dropdown
+
+    Copy URL
+
+    Close current repo
+
+    Paste URL, make sure you are not in another repo
+
+git pull gets changes from website onto local machine
+    Clone repo
+
+    git pull origin branch_name
+
+Can use github pages to allow someone to view live version of your repo

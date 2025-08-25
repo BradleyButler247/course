@@ -1,0 +1,663 @@
+Express is a Minimalist Framework
+
+Start Express Server
+
+    In command line run:
+
+        npm init --yes
+
+            This creates package.json
+
+        npm install express
+
+    In a JS file write:
+
+        const express = require('express');
+
+        // This will execute express as a function 
+        const app = express();
+
+        // 3000 is the port we want our server on, it is also pretty standard
+        // app.listen should always be at the bottom of the file
+        app.listen(3000, () => {
+            console.log('Server is running on port 3000')
+        })
+
+    In command line run:
+
+        node fileName.js
+
+            This will initiate the server
+
+Creating Routes
+
+    Refer to ./express-intro-demo/VideoCode/ExpressErrors/expressRoutes.js
+
+    To create a get route:
+
+        const express = require('express');
+        const app = express();
+
+        app.get('/dogs', (req, res) => {
+            console.log('You asked for /dogs')
+        })
+
+        app.listen(3000, () => {
+            console.log('Server is running on port 3000')
+        })
+
+    Then when we go to localhost.3000/dogs it will console.log 'You asked for /dogs'
+
+    We need a request(req)/response(res) callback
+
+        request: information about request (query string, url parameters, form data)
+
+        response: Useful methods for sending a response (html, text, json, etc.)
+
+        To display a response on our page in the app.get function include:
+
+            res.send('woof woof')
+
+                This will display the string 'woof woof'
+
+                res.send dynamically sets the content type
+
+        Response will come from the first matching route handler it finds
+
+            We can tell it to run the next matching route handler but if we don't it will not run the following one
+
+    We can make routes for:
+
+        app.get(path, callback)
+
+        app.post(path, callback)
+        
+        app.put(path, callback)
+        
+        app.patch(path, callback)
+        
+        app.delete(path, callback)
+
+    We can use the same route handler for get and post requests
+
+Nodemon
+
+    A wrapper for node that will automatically update the server if it detects changes in the file
+
+    Install it globally
+
+        npm install --global nodemon
+
+    Run files using nodemon instead of node
+
+        nodemon fileName.js
+
+Req Params
+
+        const greetings = {
+            en: "hello",
+            fr: 'bonjour',
+            ic: 'halló',
+            ja: 'konnichiwa'
+        }
+
+
+        app.get("/greet/:language", (req, res) => {
+        const lang = req.params.language;
+        const greeting = greetings[lang];
+        if (!greeting) return res.send("INVALID LANGUAGE");
+            return res.send(greeting.toUpperCase());
+        })
+
+    We use :param instead of <param> so in this example we use an object but greetings could be a database instead
+
+    If we went to /greet/en req.params.language would be english
+
+What to return?
+
+    Express doesn't care if we return anything, js does
+
+    res.send does not stop a function but return does
+
+    We typically return res.send to stop the code following it does not run
+
+        Sometimes it doesn't matter but other times it will avoid errors
+
+req.query
+
+        /search?term=pig&sort=cute
+
+    If we include a query string in our URL we can access it using request.query
+
+    When we use req.query it will equal: 
+        
+        {term: pig, sort: cute}
+
+    We can also deconstruct it:
+
+        {term: pig, sort: cute} = req.query
+
+req.headers
+
+    We can access headers with req.headers
+
+    If we want to find language preference
+
+        req.headers('accept-language')
+
+req.body
+
+        const express = require('express')
+        const app = express()
+
+        app.use(express.json())
+        app.use(express.urlencoded({ extended:true }))
+
+    This is how we tell express to parse request bodies doe either form or JSON
+
+    One or both of the app.use lines will go at the top of our app 
+
+        .json() for json data
+
+        urlencoded for form data
+
+    Including that allows us to use req.body and actually receive data
+
+Responding with JSON
+
+    Refer to jsonApi.js
+
+Status Codes
+
+        app.post('/candies', (req, res) => {
+            if (req.body.name.toLowerCase() === "circus peanuts") {
+                res.status(403).json({ msg: "HORRIBLE CHOICE.  CIRCUS PEANUTS FORBIDDEN!" })
+            }
+            CANDIES.push(req.body);
+            res.status(201).json(CANDIES);
+        })
+
+    We need to define our status codes
+
+Error Handling
+
+    Refer to files in ExpressErrors
+
+    When using the 'Throw' command Express will default to 500 error code if we do not specify one
+
+    Custom Error Classes
+
+        Refer to files in ExpressErrors
+
+            class ExpressError extends Error {
+                constructor(msg, status) {
+                    super();
+                    this.msg = msg;
+                    this.status = status;
+                    console.error(this.stack)
+                }
+            }
+
+    Refer to expressErrors/app.js
+
+            // If no other route matches, respond with a 404
+            app.use((req, res, next) => {
+                const e = new ExpressError("Page Not Found", 404)
+                next(e)
+            })
+
+            // Error handler
+            app.use(function (err, req, res, next) { //Note the 4 parameters!
+                // the default status is 500 Internal Server Error
+                let status = err.status || 500;
+                let message = err.msg;
+
+                // set the status and alert the user
+                return res.status(status).json({
+                    error: { message, status }
+                });
+            });
+
+            app.listen(3000, () => {
+              console.log("Server running on port 3000")
+            });
+
+Debugging Express
+
+    We can use the Chrome Dev Tools Debugger
+
+    Start node with:
+
+        node --inspect-brk fileName.js
+
+    We can also run:
+
+        node --inspect fileName.js
+
+        Then include the keyword 'debugger' in our code to activate the breakpoint
+
+
+
+
+Router & Middleware ******************************************************************************************
+
+Router Intro
+
+    To better organize our routes
+
+    Refer to /express-router-middleware-demo/VideoCode/routing-demo
+
+Middleware
+
+    Refer to /express-router-middleware-demo/VideoCode/routing-demo/middleware.js
+
+    Code that runs in the middle of the request/response cycle
+
+    express.json() and global error handlers are an example of middleware
+
+Morgan External Middleware
+
+    External middleware package
+
+        npm i morgan
+
+    In app.js
+
+        const morgan = require("morgan")
+
+        app.use(morgan('dev'))
+
+Supertest Cat API
+
+    Refer to cats.test.js
+
+    Integration tests with supertest
+
+    Supertest is a library
+
+        npm i --save-dev supertest
+
+    --save-dev is included to specify it is a development dependency
+
+    We need to move app.listen into a separate file because we will need it in our test file
+
+    Then we need to run:
+
+        nodemon server.js
+
+    We must import supertest in our test file
+
+    In test file we need to set process.env.NODE_ENV to 'test'
+
+    Debugging tests
+
+        We can console.log inside the test
+
+        Or we could use node --inspect-brk $(which jest) --runInBand NameOfFile
+
+        Or we could use node --inspect $(which jest) --runInBand NameOfFile
+
+            To do it this way we need to include the debugger keyword in our test file
+
+
+
+Router & Middleware ******************************************************************************************
+
+Express & Postgres
+
+    npm install pg
+
+        This allows us to connect postgres to node/express
+
+    Connecting postgres
+
+        Run psql < data.sql to create db from our SQL file
+
+        In a seperate file (db.js)
+
+            const { Client } = require("pg");
+
+            let DB_URI;
+
+            // If we're running in test "mode", use our test db
+            // Make sure to create both databases!
+            if (process.env.NODE_ENV === "test") {
+                DB_URI = "postgresql:///usersdb_test";
+            } else {
+                DB_URI = "postgresql:///usersdb";
+            }
+
+            let db = new Client({
+                connectionString: DB_URI
+            });
+
+            db.connect();
+
+            module.exports = db;
+
+        Then in files that we want to access our DB in (routes.js)
+
+            const db = require("../db");
+
+        To make SQL query we simply use:
+
+            db.query('<SQL command>')
+
+            For example
+
+                router.get('/', async (req, res, next) => {
+                    try {
+                        const results = await db.query(`SELECT * FROM users`);
+                        return res.json({ users: results.rows })
+                    } catch (e) {
+                        return next(e);
+                    }
+                })
+
+        Since our requests are asynchronous we need to use async/await
+
+    Async Error Handling
+
+        If you make a request for a something that does not exist you will get an unhandledPromiseRejectionWarning and the server will crash
+
+        This means that we need to use try/catch logic
+
+    SQL Injections
+
+            router.get('/search', async (req, res, next) => {
+                try {
+                    const { type } = req.query;
+                    const results = await db.query(`SELECT * FROM users WHERE type=$1`, [type])
+                    return res.json(results.rows)
+                } catch (e) {
+                    return next(e)
+                }
+            })
+
+
+        Type of attack where someone takes bad SQL and executes it on our database
+
+        If we are accepting input from a user they can submit an SQL command that can delete/modify/read stuff from tables or the entire DB
+
+            Such as submitting:
+
+                'bwah-hah'; DELETE FROM users; -- 
+
+            into our seach route it will delete everything from our users table
+
+                The -- is a comment in SQL which helps remove the extra quote at the end of the SQL command
+
+        The solution to this is parameterized queries
+
+            Instead of passing variables directly into our code we will use $1, $2, $3, etc. to represent our user responses
+        
+            This will cause the user input to be added to the query in the postgres side of the code not the JS
+
+    Creating Users PG
+
+            router.post('/', async (req, res, next) => {
+                try {
+                    const { name, type } = req.body;
+                    const results = await db.query('INSERT INTO users (name, type) VALUES ($1, $2) RETURNING id, name, type', [name, type]);
+                    // We return the following so that we get verification that the submission was successful
+                    return res.status(201).json({ user: results.rows[0] })
+                } catch (e) {
+                    return next(e)
+                }
+            })  
+
+    Updating & Deleting PG
+
+            router.patch('/:id', async (req, res, next) => {
+                try {
+                    const { id } = req.params;
+                    const { name, type } = req.body;
+                    const results = await db.query('UPDATE users SET name=$1, type=$2 WHERE id=$3 RETURNING id, name, type', [name, type, id])
+                    if (results.rows.length === 0) {
+                        throw new ExpressError(`Can't update user with id of ${id}`, 404)
+                    }
+                    return res.send({ user: results.rows[0] })
+                } catch (e) {
+                    return next(e)
+                }
+            })
+
+            router.delete('/:id', async (req, res, next) => {
+                try {
+                    const results = db.query('DELETE FROM users WHERE id = $1', [req.params.id])
+                    return res.send({ msg: "DELETED!" })
+                } catch (e) {
+                    return next(e)
+                }
+            })
+
+    Testing PG & Setup
+
+        In test file include 
+
+            process.env.NODE_ENV = 'test';
+
+        This will cause our db.js file to use the test DB instead of the prod/dev DB
+
+        Should make a test-data.SQL file instead of modifying data.SQL
+
+        Refer to users.test.js for test structures
+
+    
+Object-Oriented Node-pg
+
+    Using classes and functions to call our SQL instead of including the SQL directly in the code
+
+    Refer to models folder
+
+Hashing and JSON Web Tokens (JWTs)
+
+    Refer to express-hashing-jwts-demo/VideoCode/middleware/auth.js
+
+    Hash passwords with bcrypt
+
+    Use JSON web tokens for API authentication
+
+    Use middleware to simplify route security
+
+    bcrypt
+
+        const bcrypt = require('bcrypt')
+
+        const { BCRYPT_WORK_FACTOR } = require('../config')
+
+        bcrypt.hash(password-to-hash, work-factor)
+
+            Hash password, using work factor (12 is good)
+
+            Returns promise - resolve to get hashed password
+
+        bcrypt.compare(password, hashed-password)
+
+            Check if password is valid
+
+            Returns promise - resolve to get boolean
+
+    JWTs
+
+        Allow us to share authentication data across multiple APIs/Hostnames
+
+        npm install jsonwebtoken
+
+            jwt.sign(payload, secret-key, jwt-options)
+
+                payload: object to store as token payload
+
+                secret-key: secret string used to sign token
+
+                jwt-options: optional object of settings for making the token
+
+                Returns token as a string
+
+            jwt.verify(token, secret-key)
+
+                Verify token signature and return payload if valid
+
+            jwt.decode(token)
+
+                Return the payload from the token, without the secret key
+
+API Validation ******************************************************************************************
+
+JSON Schema
+
+    Standard spec for describing JSON in a human and machine-readable way
+
+    Refer to express-api-validation-demo/schemas/bookSchema.json
+
+    npm install jsonschema
+
+    const jsonschema = require("jsonschema");
+    const bookSchema = require("../schemas/bookSchema.json")
+        Include your schema json
+
+    jsonschema.validate(<object to validate>, <schema to validate with>)
+
+    jsonschema.validate(<object to validate>, <schema to validate with>).valid
+
+        This will return true/false based on validity
+
+    To easily generate a schema
+
+        Take JSON that is formatted to the desired specifications
+
+        Paste into JSONschema.net
+
+        Click infer schema 
+
+    AJV is another schema validator
+
+Testing ******************************************************************************************
+
+Include how to run tests in the readme
+
+Test the API not the db
+
+Test Driven Development
+
+    Write tests first
+
+    Then write code necessary to pass the test
+
+Mocking
+
+    To simulate Math.random
+
+        Math.random = jest.fn(() => 0.5)
+
+    expect(function).toHaveBeenCalled()
+
+        Tests that our function was called
+
+Continuous Integration
+
+    Merge in smaller bits of code rather than waiting to make a massive push at the end
+
+    Automates running your tests when pushing code
+
+    Rejects deployment if tests fail
+
+    Easily notify you when changes to your test suite occur
+
+    Travis CI, Jenkins, Circle CI, Buddy
+
+End-to-End Testing with Cypress
+
+    Refer to express-testing-practices-demo/cypress-demo
+
+    npm install cypress
+
+Wrap-Up
+
+    Nunjucks
+
+        Basically Express Jinja
+
+    Pug
+
+        Templating system using simpler text to create html
+
+    Static Files
+
+        Include:
+            
+            app.use(express.static('folder_containing_css/js_files'))
+
+        Link to CSS file in HTML
+
+    Helmet
+
+        Collection of middleware files for security
+
+    Passport
+
+        Provides common pattern for authentication
+
+    Cookie Parser
+
+        Parses incoming requests and accesses cookies
+
+        Can also be used to create cookies
+
+    Other Frameworks
+
+        Koa2
+
+        Hapi
+
+        Sails
+
+    MomentJS
+
+        Makes formatting dates significantly easier
+
+    ValidatorJS
+
+        Library for validating strings
+
+    Lodash
+
+        Has many functions that JS is missing
+
+            .isEqual(obj1, obj2)
+
+                This will determine if two objects are equal, not that they reference the same object like js does
+
+            .cloneDeep(variable)
+
+                This allows us to create clones of arrays, obj, etc that clones nested values as well
+
+    npm scripts
+
+        Allows us to define our own commands for the command line in package.json
+
+    MongoDB
+
+        A document database
+
+        No SQL - Non-relational database
+
+        Stores docs as json
+
+    Redis
+
+        Good for key-value stores
+
+        Very fast
+
+        No SQL DB
+
+    Websockets
+
+        A more lightweight or flexible alternative to http
+
+        A good way to share data across multiple clients 
+
+        Useful for things that use continuous monitoring/live data rather than a button click or page refresh
+
+        

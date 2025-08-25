@@ -1,0 +1,9 @@
+Get into directory you want
+
+Fork repo
+    Clones the repo into your github so you can push to it
+
+run git clone <github_url> 
+
+Once you push your changes you can create a pull request to the actual git and devs can either accept or decline
+

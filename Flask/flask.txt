@@ -1,0 +1,68 @@
+Flask & Other Frameworks
+    Flask
+        Set of functions, classes, etc. that help define:
+            Which requests to respond to
+            How to respond to requests
+
+        What do web apps need?
+            Handle web requests
+            Produce dynamic HTML
+            Handle forms
+            Handle cookies
+            Connect to databases
+            Provide user log-in/log-out
+            Cache pages for performance
+            Much more
+        
+        python3 -m venv venv
+        source venv/bin/activate
+        pip3 install flask
+
+        Flask will look for an app named app.python
+        Once Venv is created and flask is installed, the first two lines of app.py should be:
+            from flask import Flask
+            app = Flask(__name__)
+            Then in terminal run 'flask run' from venv folder
+        
+        If file is not named app.py
+            Run the line 'FLASK_APP=file.py flask run'
+        
+        Environment defaults to production rather than development
+        Running flask in development mode give you access to a debugger
+        To switch to development mode:
+            Stop server (ctrl + C)
+            Run 'FLASK_DEBUG=1' then 'flask run'
+
+        If you don't want to keep switching to development mode do the following
+            In venv run 'export FLASK_DEBUG=1'
+            Or put 'export FLASK_DEBUG=1' in .zshrc
+
+        Adding Routes
+            Refer to app.py
+
+        Query String Parameters
+            Routes default to GET requests
+
+        POST Requests
+            curl -X POST https://127.0.0.1:5000/post
+            This will make a post request
+
+    Redirecting
+        Redirect code is usually 302
+        Put 'raise' as a line in code and it will initiate the interactive debugger
+        pdb is a useful way to step through python code 
+            import pdb
+            set_trace()
+
+            calling this within our code will allow us to view variable values and other python data at the point that pdb is called
+
+            ? - Get help
+            l - List code where I am
+            p - Print this expression
+            pp - Pretty print this expression (Useful with complex data)
+            n - Go to next line
+            s - Step into function call
+            r - Return from function call
+            c - Continue to next breakpoint
+            w - Print 'frame' (Where am I?)
+            q - Quit

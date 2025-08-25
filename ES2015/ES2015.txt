@@ -1,0 +1,39 @@
+ECMA Script
+    Not a script itself but rather a list of specification for how a script should work
+
+    Updated by technical committee 39
+
+    Now updated annually
+
+var
+    var allows you to reassign variable values
+        var x = 10;
+        var x = 99; will work fine
+
+    var has a global scope so it is added as a property on the window object
+
+    let & const are are not treated the same
+
+let
+
+    let can be reassigned but not redeclared
+        let x = 10;
+        cannot then say let x = 5;
+        but x = 99; will reassign a value
+        
+    let is more strictly scoped than var meaning if I declare a for loop with var I can access i outside of the function whereas if I declare it with let I cannot access i outside of the function
+
+const
+    const does not allow for a variable to be reassigned or redeclared
+
+    const won't let you change a variable value but it will allow you to manipulate values in an array & object
+
+Hoisting
+    var will declare the varible when the code is initialized but won't assign it a value until the line of code is reached. This means that if you call a variable before it is declared it will return undefined until the value is assign, while let and const will return an error if variable is called before declaration.
+
+Choosing var let & const
+    never use var
+
+    start with const if possible, then if it won't work use let
+
+    

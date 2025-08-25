@@ -1,0 +1,8 @@
+const PI = 3.14
+
+Quiz
+    The difference between var and let is the scope that the variable is defined in, var is a global scope while let is block scope. Var allows a variable to be redeclared and reassigned and let allows a variable to be reassigned but not redeclared
+
+    The difference between var and const is also the scope. const is block scope like let. const does not allow a variable to be redeclared or reassigned
+
+    Hoisting is how a variable is declared. Using var the variable is hoisted upon initializing the code meaning that the variable is declared when the code begins to run but it is not assigned a value until the line declaring the variable is reached so while it won't return an error if the variable is called before it is declared but it will return undefined. Let and const will not define the variable until it is declared in the code so if you try to call the variable before it is declared you will get an error rather than undefined.
